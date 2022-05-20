@@ -20,10 +20,16 @@ func main() {
 	fmt.Printf("For more information on how to book, please contact us at %s.\n", emailAddress)
 
 	numPeople := bookingInformation()
-
 	remainingPeople = remainingPeople - numPeople
 
+	// let people know we are close to capacity
+	// this should go out as an email to notify the bookings team
+	if remainingPeople < 5 {
+		fmt.Println("We are nearly at capacity!")
+	}
+
 	fmt.Printf("We now only have room for %d more people.\n", remainingPeople)
+	fmt.Printf("These are all of our bookings: %v.\n", bookings)
 }
 
 func bookingInformation() uint {
