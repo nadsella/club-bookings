@@ -1,17 +1,20 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"os"
+)
 
 const (
-	locationName = "Crookham Street Social"
-	emailAddress = "enquiries@crookhamstreet.co.uk"
-	maxPeople    = 80
+	locationName      = "Crookham Street Social"
+	emailAddress      = "enquiries@crookhamstreet.co.uk"
+	maxPeople    uint = 80
 )
 
 var bookings []string
+var remainingPeople uint = 80
 
 func main() {
-	var remainingPeople uint = 80
 
 	fmt.Printf("Welcome to the %s table booking system.\n", locationName)
 	fmt.Printf("We can currently only accommodate %d people for each event. This event currently has %d seats left.\n",
@@ -21,17 +24,14 @@ func main() {
 
 	numPeople := bookingInformation()
 	remainingPeople = remainingPeople - numPeople
-
-	// let people know we are close to capacity
-	// this should go out as an email to notify the bookings team
-	if remainingPeople < 5 {
-		fmt.Println("We are nearly at capacity!")
-	}
+	checkCapacity()
 
 	fmt.Printf("We now only have room for %d more people.\n", remainingPeople)
 	fmt.Printf("These are all of our bookings: %v.\n", bookings)
 }
 
+// grabs all the booking info from the user
+// prints out a message for the booking and returns the number of people for the booking
 func bookingInformation() uint {
 	var firstName string
 	var lastName string
@@ -63,4 +63,21 @@ func bookingInformation() uint {
 		userEmailAddress)
 
 	return numPeople
+}
+
+// checks if we're close to capacity, and if we're at capacity will let the user know
+// and exit
+func checkCapacity() {
+	// let people know we are close to capacity
+	// this should go out as an email to notify the bookings team
+	if remainingPeople == 0 {
+		fmt.Println("We are at capacity!")
+
+		// we exit the program when were at capacity as we can't take any other bookings
+		os.Exit(0)
+	}
+
+	if remainingPeople < 5 {
+		fmt.Println("We are nearly at capacity!")
+	}
 }
