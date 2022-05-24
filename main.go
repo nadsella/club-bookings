@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"os"
 	"strings"
 )
 
@@ -31,7 +30,9 @@ func main() {
 		fmt.Printf("We now only have room for %d more people.\n", remainingPeople)
 		fmt.Printf("These are all of our bookings: %v.\n", firstNames)
 
-		checkCapacity()
+		if atCapacity() {
+			break
+		}
 	}
 }
 
@@ -71,20 +72,22 @@ func bookingInformation() uint {
 }
 
 // checks if we're close to capacity, and if we're at capacity will let the user know
-// and exit
-func checkCapacity() {
+// and returns a boolean
+func atCapacity() bool {
 	// let people know we are close to capacity
 	// this should go out as an email to notify the bookings team
 	if remainingPeople == 0 {
 		fmt.Println("We are at capacity!")
 
-		// we exit the program when were at capacity as we can't take any other bookings
-		os.Exit(4)
+		// we return true when were at capacity
+		return true
 	}
 
 	if remainingPeople < 5 {
 		fmt.Println("We are nearly at capacity!")
 	}
+
+	return false
 }
 
 // loops through the bookings and just grabs the first names
