@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"strings"
 )
 
 const (
@@ -22,12 +23,21 @@ func main() {
 		remainingPeople)
 	fmt.Printf("For more information on how to book, please contact us at %s.\n", emailAddress)
 
-	numPeople := bookingInformation()
-	remainingPeople = remainingPeople - numPeople
-	checkCapacity()
+	for {
+		numPeople := bookingInformation()
+		remainingPeople = remainingPeople - numPeople
+		firstNames := []string{}
 
-	fmt.Printf("We now only have room for %d more people.\n", remainingPeople)
-	fmt.Printf("These are all of our bookings: %v.\n", bookings)
+		for _, booking := range bookings {
+			var names = strings.Fields(booking)
+			firstNames = append(firstNames, names[0])
+		}
+
+		fmt.Printf("We now only have room for %d more people.\n", remainingPeople)
+		fmt.Printf("These are all of our bookings: %v.\n", firstNames)
+
+		checkCapacity()
+	}
 }
 
 // grabs all the booking info from the user
@@ -74,7 +84,7 @@ func checkCapacity() {
 		fmt.Println("We are at capacity!")
 
 		// we exit the program when were at capacity as we can't take any other bookings
-		os.Exit(0)
+		os.Exit(4)
 	}
 
 	if remainingPeople < 5 {
