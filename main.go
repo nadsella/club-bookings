@@ -57,6 +57,12 @@ func bookingInformation() uint {
 	fmt.Println("Please enter the amount of people you need a table for:")
 	fmt.Scan(&numPeople)
 
+	// we can't add more people that what is left, for now we log an error and return 0
+	if numPeople > remainingPeople {
+		fmt.Printf("We can't reserve %d spaces as there are only %d left\n", numPeople, remainingPeople)
+		return 0
+	}
+
 	// add the user to the bookings array
 	bookings = append(bookings, fmt.Sprintf("%s %s", firstName, lastName))
 
