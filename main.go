@@ -26,12 +26,7 @@ func main() {
 	for {
 		numPeople := bookingInformation()
 		remainingPeople = remainingPeople - numPeople
-		firstNames := []string{}
-
-		for _, booking := range bookings {
-			var names = strings.Fields(booking)
-			firstNames = append(firstNames, names[0])
-		}
+		firstNames := getFirstNames()
 
 		fmt.Printf("We now only have room for %d more people.\n", remainingPeople)
 		fmt.Printf("These are all of our bookings: %v.\n", firstNames)
@@ -90,4 +85,16 @@ func checkCapacity() {
 	if remainingPeople < 5 {
 		fmt.Println("We are nearly at capacity!")
 	}
+}
+
+// loops through the bookings and just grabs the first names
+func getFirstNames() []string {
+	firstNames := []string{}
+
+	for _, booking := range bookings {
+		var names = strings.Fields(booking)
+		firstNames = append(firstNames, names[0])
+	}
+
+	return firstNames
 }
