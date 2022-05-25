@@ -22,18 +22,19 @@ func main() {
 		remainingPeople)
 	fmt.Printf("For more information on how to book, please contact us at %s.\n", emailAddress)
 
-	for {
+	for remainingPeople > 0 && len(bookings) < int(maxPeople) {
 		numPeople := bookingInformation()
 		remainingPeople = remainingPeople - numPeople
-		firstNames := getFirstNames()
-
-		fmt.Printf("We now only have room for %d more people.\n", remainingPeople)
-		fmt.Printf("These are all of our bookings: %v.\n", firstNames)
 
 		if atCapacity() {
 			break
 		}
+
+		fmt.Printf("We only have room for %d more people\n", remainingPeople)
 	}
+
+	firstNames := getFirstNames()
+	fmt.Printf("These are all of our bookings: %v.\n", firstNames)
 }
 
 // grabs all the booking info from the user
