@@ -57,9 +57,19 @@ func bookingInformation() uint {
 	fmt.Println("Please enter the amount of people you need a table for:")
 	fmt.Scan(&numPeople)
 
+	isValidNumPeople := numPeople > 0 && numPeople > remainingPeople
+
+	// for now just a basic if statement to validate user data
+	if !validateUserData(firstName, lastName, emailAddress) {
+		return 0
+	}
+
 	// we can't add more people that what is left, for now we log an error and return 0
-	if numPeople > remainingPeople {
-		fmt.Printf("We can't reserve %d spaces as there are only %d left\n", numPeople, remainingPeople)
+	if isValidNumPeople {
+		fmt.Printf(
+			"We can't reserve %d spaces as there are only %d left\n",
+			numPeople,
+			remainingPeople)
 		return 0
 	}
 
@@ -93,6 +103,30 @@ func atCapacity() bool {
 		fmt.Println("We are nearly at capacity!")
 	}
 
+	return false
+}
+
+func validateUserData(userFirstName string, userLastName string, userEmail string) bool {
+	isValidName := len(userFirstName) >= 2 && len(userLastName) >= 2
+	isValidEmail := strings.Contains(userEmail, "@")
+
+	// if it's fine, then just return true
+	if isValidName && isValidEmail {
+		return true
+	}
+
+	// else we want to begin to format an error message to be printed
+	errorMessage := "We can't reserve these spaces as the %s provided is not valid\n"
+
+	if !isValidName {
+		errorMessage = fmt.Sprintf(errorMessage, "name")
+	} else if !isValidEmail {
+		errorMessage = fmt.Sprintf(errorMessage, "email")
+	}
+
+	fmt.Println(errorMessage)
+
+	// and return false
 	return false
 }
 
