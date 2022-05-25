@@ -12,7 +12,7 @@ const (
 )
 
 var bookings []string
-var remainingPeople uint = 80
+var remainingPeople uint = maxPeople
 
 func main() {
 
