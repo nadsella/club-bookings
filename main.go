@@ -23,8 +23,7 @@ func main() {
 	fmt.Printf("For more information on how to book, please contact us at %s.\n", emailAddress)
 
 	for remainingPeople > 0 && len(bookings) < int(maxPeople) {
-		numPeople := bookingInformation()
-		remainingPeople = remainingPeople - numPeople
+		remainingPeople = remainingPeople - bookingInformation()
 
 		if atCapacity() {
 			break
