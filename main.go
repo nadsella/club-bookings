@@ -60,7 +60,7 @@ func bookingInformation() uint {
 	isValidNumPeople := numPeople > 0 && numPeople > remainingPeople
 
 	// for now just a basic if statement to validate user data
-	if !validateUserData(firstName, lastName, emailAddress) {
+	if !validateUserData(firstName, lastName, userEmailAddress) {
 		return 0
 	}
 
