@@ -9,6 +9,7 @@ const (
 	locationName      = "Crookham Street Social"
 	emailAddress      = "enquiries@crookhamstreet.co.uk"
 	maxPeople    uint = 80
+	minNameLen   int  = 2
 )
 
 var bookings []string
@@ -107,7 +108,7 @@ func atCapacity() bool {
 }
 
 func validateUserData(userFirstName string, userLastName string, userEmail string) bool {
-	isValidName := len(userFirstName) >= 2 && len(userLastName) >= 2
+	isValidName := len(userFirstName) >= minNameLen && len(userLastName) >= minNameLen
 	isValidEmail := strings.Contains(userEmail, "@")
 
 	// if it's fine, then just return true
@@ -115,16 +116,13 @@ func validateUserData(userFirstName string, userLastName string, userEmail strin
 		return true
 	}
 
-	// else we want to begin to format an error message to be printed
-	errorMessage := "We can't reserve these spaces as the %s provided is not valid\n"
-
 	if !isValidName {
-		errorMessage = fmt.Sprintf(errorMessage, "name")
-	} else if !isValidEmail {
-		errorMessage = fmt.Sprintf(errorMessage, "email")
+		fmt.Println("We can't reserve these spaces as your first or last name is not long enough.")
 	}
 
-	fmt.Println(errorMessage)
+	if !isValidEmail {
+		fmt.Println("We can't reserve these spaces as your email address doesn't contain an @.")
+	}
 
 	// and return false
 	return false
