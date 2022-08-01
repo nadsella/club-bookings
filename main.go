@@ -16,12 +16,7 @@ var bookings []string
 var remainingPeople uint = maxPeople
 
 func main() {
-
-	fmt.Printf("Welcome to the %s table booking system.\n", locationName)
-	fmt.Printf("We can currently only accommodate %d people for each event. This event currently has %d seats left.\n",
-		maxPeople,
-		remainingPeople)
-	fmt.Printf("For more information on how to book, please contact us at %s.\n", emailAddress)
+	greetUsers()
 
 	for remainingPeople > 0 && len(bookings) < int(maxPeople) {
 		remainingPeople = remainingPeople - bookingInformation()
@@ -35,6 +30,15 @@ func main() {
 
 	firstNames := getFirstNames()
 	fmt.Printf("These are all of our bookings: %v.\n", firstNames)
+}
+
+// greets the users
+func greetUsers() {
+	fmt.Printf("Welcome to the %s table booking system.\n", locationName)
+	fmt.Printf("We can currently only accommodate %d people for each event. This event currently has %d seats left.\n",
+		maxPeople,
+		remainingPeople)
+	fmt.Printf("For more information on how to book, please contact us at %s.\n", emailAddress)
 }
 
 // grabs all the booking info from the user
