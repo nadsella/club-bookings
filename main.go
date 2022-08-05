@@ -78,8 +78,7 @@ func bookingInformation() uint {
 		return 0
 	}
 
-	// add the user to the bookings array
-	bookings = append(bookings, fmt.Sprintf("%s %s", firstName, lastName))
+	bookTickets(fmt.Sprintf("%s %s", firstName, lastName))
 
 	fmt.Printf(
 		"Thank you %s %s for your booking at %s for %d people. You will receive a confirmation email at %s.\n",
@@ -90,6 +89,12 @@ func bookingInformation() uint {
 		userEmailAddress)
 
 	return numPeople
+}
+
+// appends the name to the bookings
+func bookTickets(name string) {
+	// add the user to the bookings array
+	bookings = append(bookings, name)
 }
 
 // checks if we're close to capacity, and if we're at capacity will let the user know
@@ -108,27 +113,6 @@ func atCapacity() bool {
 		fmt.Println("We are nearly at capacity!")
 	}
 
-	return false
-}
-
-func validateUserData(userFirstName string, userLastName string, userEmail string) bool {
-	isValidName := len(userFirstName) >= minNameLen && len(userLastName) >= minNameLen
-	isValidEmail := strings.Contains(userEmail, "@")
-
-	// if it's fine, then just return true
-	if isValidName && isValidEmail {
-		return true
-	}
-
-	if !isValidName {
-		fmt.Println("We can't reserve these spaces as your first or last name is not long enough.")
-	}
-
-	if !isValidEmail {
-		fmt.Println("We can't reserve these spaces as your email address doesn't contain an @.")
-	}
-
-	// and return false
 	return false
 }
 
