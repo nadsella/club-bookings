@@ -1,15 +1,15 @@
 package main
 
 import (
+	"bookings/helper"
 	"fmt"
 	"strings"
 )
 
 const (
-	locationName      = "Crookham Street Social"
-	emailAddress      = "enquiries@crookhamstreet.co.uk"
-	maxPeople    uint = 80
-	minNameLen   int  = 2
+	locationName string = "Crookham Street Social"
+	emailAddress string = "enquiries@crookhamstreet.co.uk"
+	maxPeople  uint = 80
 )
 
 var bookings []string
@@ -65,7 +65,7 @@ func bookingInformation() uint {
 	isValidNumPeople := numPeople > 0 && numPeople > remainingPeople
 
 	// for now just a basic if statement to validate user data
-	if !validateUserData(firstName, lastName, userEmailAddress) {
+	if !helper.ValidateUserData(firstName, lastName, userEmailAddress) {
 		return 0
 	}
 
