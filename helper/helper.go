@@ -6,7 +6,6 @@ import (
 )
 
 const (
-	maxPeople  uint = 80
 	minNameLen int  = 2
 )
 
