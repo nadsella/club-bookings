@@ -3,7 +3,8 @@ package main
 import (
 	"bookings/helper"
 	"fmt"
-	"strings"
+	"os"
+	"strconv"
 )
 
 const (
@@ -12,7 +13,7 @@ const (
 	maxPeople  uint = 80
 )
 
-var bookings []string
+var bookings []map[string]string
 var remainingPeople uint = maxPeople
 
 func main() {
@@ -28,8 +29,8 @@ func main() {
 		fmt.Printf("We only have room for %d more people\n", remainingPeople)
 	}
 
-	firstNames := getFirstNames()
-	fmt.Printf("These are all of our bookings: %v.\n", firstNames)
+	names := getNames()
+	fmt.Printf("These are all of our bookings: %v.\n", names)
 }
 
 // greets the users
@@ -78,7 +79,7 @@ func bookingInformation() uint {
 		return 0
 	}
 
-	bookTickets(fmt.Sprintf("%s %s", firstName, lastName))
+	bookTickets(firstName, lastName, emailAddress, numPeople)
 
 	fmt.Printf(
 		"Thank you %s %s for your booking at %s for %d people. You will receive a confirmation email at %s.\n",
@@ -92,9 +93,20 @@ func bookingInformation() uint {
 }
 
 // appends the name to the bookings
-func bookTickets(name string) {
+func bookTickets(
+	firstName string,
+	lastName string,
+	emailAddress string,
+	numPeople uint) {
+
+	var userData = make(map[string]string)
+	userData["firstName"] = firstName
+	userData["lastName"] = lastName
+	userData["emailAddress"] = emailAddress
+	userData["numPeople"] = strconv.FormatUint(uint64(numPeople), 10)
+
 	// add the user to the bookings array
-	bookings = append(bookings, name)
+	bookings = append(bookings, userData)
 }
 
 // checks if we're close to capacity, and if we're at capacity will let the user know
@@ -117,13 +129,17 @@ func atCapacity() bool {
 }
 
 // loops through the bookings and just grabs the first names
-func getFirstNames() []string {
-	firstNames := []string{}
+func getNames() []string {
+	names := []string{}
 
 	for _, booking := range bookings {
-		var names = strings.Fields(booking)
-		firstNames = append(firstNames, names[0])
+		names = append(
+			names, 
+			fmt.Sprintf(
+				"%s %s",
+				booking["firstName"],
+				booking["lastName"]))
 	}
 
-	return firstNames
+	return names
 }
