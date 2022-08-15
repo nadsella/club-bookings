@@ -3,11 +3,16 @@ package booking
 import (
 	"bookings/helper"
 	"fmt"
-	"strconv"
 )
 
-var Bookings []map[string]string
+var Bookings []UserData
 var remainingPeople = helper.RemainingPeople
+type UserData struct {
+	firstName string
+	lastName string
+	email string
+	numPeople uint
+}
 
 // grabs all the booking info from the user
 // prints out a message for the booking and returns the number of people for the booking
@@ -66,11 +71,12 @@ func bookTickets(
 	emailAddress string,
 	numPeople uint) {
 
-	var userData = make(map[string]string)
-	userData["firstName"] = firstName
-	userData["lastName"] = lastName
-	userData["emailAddress"] = emailAddress
-	userData["numPeople"] = strconv.FormatUint(uint64(numPeople), 10)
+	var userData = UserData{
+		firstName: firstName,
+		lastName: lastName,
+		email: emailAddress,
+		numPeople: numPeople,
+	}
 
 	// add the user to the bookings array
 	Bookings = append(Bookings, userData)
@@ -85,8 +91,8 @@ func GetNames() []string {
 			names,
 			fmt.Sprintf(
 				"%s %s",
-				booking["firstName"],
-				booking["lastName"]))
+				booking.firstName,
+				booking.lastName))
 	}
 
 	return names
