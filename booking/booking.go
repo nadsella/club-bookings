@@ -2,8 +2,8 @@ package booking
 
 import (
 	"bookings/helper"
-	"strconv"
 	"fmt"
+	"strconv"
 )
 
 var Bookings []map[string]string
@@ -74,4 +74,20 @@ func bookTickets(
 
 	// add the user to the bookings array
 	Bookings = append(Bookings, userData)
+}
+
+// loops through the bookings and just grabs the names of the bookings
+func GetNames() []string {
+	names := []string{}
+
+	for _, booking := range Bookings {
+		names = append(
+			names,
+			fmt.Sprintf(
+				"%s %s",
+				booking["firstName"],
+				booking["lastName"]))
+	}
+
+	return names
 }
