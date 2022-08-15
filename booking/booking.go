@@ -124,7 +124,7 @@ func AtCapacity() bool {
 
 // emulate sending ticket via email
 func sendTicket(userTickets uint, firstName string, lastName string) {
-	time.Sleep(50 * time.Second)
+	time.Sleep(5 * time.Second)
 	ticket := fmt.Sprintf("%v tickets for %v %v", userTickets, firstName, lastName)
 	fmt.Printf("Sending %v\n", ticket)
 }

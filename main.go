@@ -8,7 +8,6 @@ import (
 const (
 	locationName string = "Crookham Street Social"
 	emailAddress string = "enquiries@crookhamstreet.co.uk"
-	
 )
 
 func main() {
@@ -18,6 +17,7 @@ func main() {
 		booking.RemainingPeople = booking.RemainingPeople - booking.BookingInformation(emailAddress, locationName)
 
 		if booking.AtCapacity() {
+			fmt.Println("At capacity")
 			break
 		}
 
