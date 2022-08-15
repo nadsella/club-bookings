@@ -3,7 +3,6 @@ package main
 import (
 	"bookings/helper"
 	"fmt"
-	"os"
 	"strconv"
 )
 
@@ -128,7 +127,7 @@ func atCapacity() bool {
 	return false
 }
 
-// loops through the bookings and just grabs the first names
+// loops through the bookings and just grabs the names of the bookings
 func getNames() []string {
 	names := []string{}
 
