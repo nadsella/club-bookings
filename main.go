@@ -11,13 +11,12 @@ const (
 	emailAddress string = "enquiries@crookhamstreet.co.uk"
 )
 
-var bookings = booking.Bookings
 var remainingPeople = helper.RemainingPeople
 
 func main() {
 	greetUsers()
 
-	for remainingPeople > 0 && len(bookings) < int(helper.MaxPeople) {
+	for remainingPeople > 0 && len(booking.Bookings) < int(helper.MaxPeople) {
 		remainingPeople = remainingPeople - booking.BookingInformation(emailAddress, locationName)
 
 		if helper.AtCapacity() {
