@@ -1,7 +1,6 @@
 package main
 
 import (
-	"bookings/helper"
 	"bookings/booking"
 	"fmt"
 )
@@ -9,21 +8,20 @@ import (
 const (
 	locationName string = "Crookham Street Social"
 	emailAddress string = "enquiries@crookhamstreet.co.uk"
+	
 )
-
-var remainingPeople = helper.RemainingPeople
 
 func main() {
 	greetUsers()
 
-	for remainingPeople > 0 && len(booking.Bookings) < int(helper.MaxPeople) {
-		remainingPeople = remainingPeople - booking.BookingInformation(emailAddress, locationName)
+	for booking.RemainingPeople > 0 && len(booking.Bookings) < int(booking.MaxPeople) {
+		booking.RemainingPeople = booking.RemainingPeople - booking.BookingInformation(emailAddress, locationName)
 
-		if helper.AtCapacity() {
+		if booking.AtCapacity() {
 			break
 		}
 
-		fmt.Printf("We only have room for %d more people\n", remainingPeople)
+		fmt.Printf("We only have room for %d more people\n", booking.RemainingPeople)
 	}
 
 	names := booking.GetNames()
@@ -34,7 +32,7 @@ func main() {
 func greetUsers() {
 	fmt.Printf("Welcome to the %s table booking system.\n", locationName)
 	fmt.Printf("We can currently only accommodate %d people for each event. This event currently has %d seats left.\n",
-		helper.MaxPeople,
-		remainingPeople)
+		booking.MaxPeople,
+		booking.RemainingPeople)
 	fmt.Printf("For more information on how to book, please contact us at %s.\n", emailAddress)
 }

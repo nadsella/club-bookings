@@ -6,7 +6,8 @@ import (
 )
 
 var Bookings []UserData
-var remainingPeople = helper.RemainingPeople
+var MaxPeople uint = 80
+var RemainingPeople uint = MaxPeople
 type UserData struct {
 	firstName string
 	lastName string
@@ -35,7 +36,7 @@ func BookingInformation(emailAddress string, locationName string) uint {
 	fmt.Println("Please enter the amount of people you need a table for:")
 	fmt.Scan(&numPeople)
 
-	isValidNumPeople := numPeople > 0 && numPeople > remainingPeople
+	isValidNumPeople := numPeople > 0 && numPeople > RemainingPeople
 
 	// for now just a basic if statement to validate user data
 	if !helper.ValidateUserData(firstName, lastName, userEmailAddress) {
@@ -47,7 +48,7 @@ func BookingInformation(emailAddress string, locationName string) uint {
 		fmt.Printf(
 			"We can't reserve %d spaces as there are only %d left\n",
 			numPeople,
-			remainingPeople)
+			RemainingPeople)
 		return 0
 	}
 
@@ -93,7 +94,34 @@ func GetNames() []string {
 				"%s %s",
 				booking.firstName,
 				booking.lastName))
+
+		sendTicket(booking.numPeople, booking.firstName, booking.lastName)
 	}
 
 	return names
+}
+
+// checks if we're close to capacity, and if we're at capacity will let the user know
+// and returns a boolean
+func AtCapacity() bool {
+	// let people know we are close to capacity
+	// this should go out as an email to notify the bookings team
+	if RemainingPeople == 0 {
+		fmt.Println("We are at capacity!")
+
+		// we return true when were at capacity
+		return true
+	}
+
+	if RemainingPeople < 5 {
+		fmt.Println("We are nearly at capacity!")
+	}
+
+	return false
+}
+
+// emulate sending ticket via email
+func sendTicket(userTickets uint, firstName string, lastName string) {
+	ticket := fmt.Sprintf("%v tickets for %v %v", userTickets, firstName, lastName)
+	fmt.Printf("Sending %v\n", ticket)
 }
