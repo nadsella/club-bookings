@@ -3,15 +3,17 @@ package booking
 import (
 	"bookings/helper"
 	"fmt"
+	"time"
 )
 
 var Bookings []UserData
 var MaxPeople uint = 80
 var RemainingPeople uint = MaxPeople
+
 type UserData struct {
 	firstName string
-	lastName string
-	email string
+	lastName  string
+	email     string
 	numPeople uint
 }
 
@@ -74,13 +76,15 @@ func bookTickets(
 
 	var userData = UserData{
 		firstName: firstName,
-		lastName: lastName,
-		email: emailAddress,
+		lastName:  lastName,
+		email:     emailAddress,
 		numPeople: numPeople,
 	}
 
 	// add the user to the bookings array
 	Bookings = append(Bookings, userData)
+
+	go sendTicket(userData.numPeople, userData.firstName, userData.lastName)
 }
 
 // loops through the bookings and just grabs the names of the bookings
@@ -94,8 +98,6 @@ func GetNames() []string {
 				"%s %s",
 				booking.firstName,
 				booking.lastName))
-
-		sendTicket(booking.numPeople, booking.firstName, booking.lastName)
 	}
 
 	return names
@@ -122,6 +124,7 @@ func AtCapacity() bool {
 
 // emulate sending ticket via email
 func sendTicket(userTickets uint, firstName string, lastName string) {
+	time.Sleep(50 * time.Second)
 	ticket := fmt.Sprintf("%v tickets for %v %v", userTickets, firstName, lastName)
 	fmt.Printf("Sending %v\n", ticket)
 }
